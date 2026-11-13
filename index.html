@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Play — small browser games by Alexei Grosul, made with his son.">
+<meta property="og:title" content="Play — Alexei Grosul">
+<meta property="og:description" content="Small browser games, drawn on paper first.">
+<meta property="og:image" content="https://play.grosul.design/img/pirates-cover.jpg">
+<title>Play — Alexei Grosul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700&family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: same rhythm as grosul.design — centered statement, white / #f5f5f7 bands, one big visual per game, black pill + blue "›" links. Single deliberate light look. */
+:root{
+  --bg:#ffffff; --band:#f5f5f7; --ink:#1d1d1f; --ink-2:#5e5e63; --ink-3:#86868b; --line:#d2d2d7; --hair:rgba(0,0,0,.08);
+  --blue:#0066cc; --black:#1d1d1f; --paper:#fbfaf4; --sun:#f6cf3a;
+  --font-display:"Helvetica Neue",Helvetica,"Inter Tight","Inter",Arial,sans-serif;
+  --font-body:"Helvetica Neue",Helvetica,"Inter",Arial,sans-serif;
+  --font-brand:"Figtree",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gl:max(22px, env(safe-area-inset-left, 0px)); --gr:max(22px, env(safe-area-inset-right, 0px));
+  --max:1200px; --ease:cubic-bezier(.28,.11,.32,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.47;letter-spacing:-.005em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,video{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gl);padding-right:var(--gr)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+
+.gnav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--hair)}
+.gnav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:52px}
+.logo{font-family:var(--font-brand);font-weight:600;font-size:20px;letter-spacing:-.02em;display:flex;align-items:baseline;gap:8px}
+.logo span{font-family:var(--font-body);font-weight:400;font-size:14px;color:var(--ink-3);letter-spacing:0}
+.navr{display:flex;align-items:center;gap:14px}
+.lang{display:inline-flex;border-radius:980px;box-shadow:inset 0 0 0 1px var(--line);padding:2px;font-size:12px}
+.lang button{border:0;background:transparent;color:var(--ink-2);font:inherit;padding:4px 9px;border-radius:980px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--black);color:#fff}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:980px;border:0;cursor:pointer;white-space:nowrap;font:inherit;font-size:17px;padding:12px 22px;transition:background .25s var(--ease),transform .25s var(--ease)}
+.btn-sm{font-size:14px;padding:7px 14px}
+.btn-dark{background:var(--black);color:#fff}
+.btn-dark:hover{background:#000;transform:scale(1.02)}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn-line:hover{background:var(--band)}
+.more{color:var(--blue);font-size:17px}
+.more::after{content:" ›"}
+.more:hover{text-decoration:underline}
+
+.hero{padding-block:clamp(56px,9vw,112px) clamp(36px,6vw,72px);text-align:center}
+.h-xl{font-family:var(--font-display);font-size:clamp(48px,7vw,96px);line-height:1.04;letter-spacing:-.03em;font-weight:500;margin:0;text-wrap:balance}
+.h-xl span{color:var(--ink-3)}
+.hsub{margin:20px auto 0;max-width:640px;font-size:clamp(19px,2vw,24px);line-height:1.35;color:var(--ink-2);text-wrap:balance}
+
+.band{background:var(--band);padding-block:clamp(48px,7vw,96px)}
+.band.white{background:var(--bg)}
+.game{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,72px);align-items:center}
+.game.flip .media{order:2}
+.media{border-radius:28px;overflow:hidden;background:var(--paper);box-shadow:0 30px 60px -30px rgba(0,0,0,.28),0 0 0 1px var(--hair);aspect-ratio:16/9;position:relative}
+.media video,.media img{width:100%;height:100%;object-fit:cover}
+.eyebrow{font-size:14px;color:var(--ink-3);margin:0 0 10px}
+.h-l{font-family:var(--font-display);font-size:clamp(34px,4.4vw,56px);line-height:1.06;letter-spacing:-.025em;font-weight:500;margin:0;text-wrap:balance}
+.lead{margin:16px 0 0;color:var(--ink-2);font-size:clamp(17px,1.5vw,19px);line-height:1.5;max-width:46ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0;list-style:none}
+.facts li{font-size:14px;color:var(--ink-2);background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);border-radius:980px;padding:5px 12px}
+.band.white .facts li{background:var(--band);box-shadow:none}
+.ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:26px}
+.soon{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:repeating-linear-gradient(-55deg,#fbfaf4 0 14px,#f3f1e6 14px 28px)}
+.soon b{font-family:var(--font-brand);font-weight:600;font-size:clamp(40px,7vw,84px);letter-spacing:-.03em;color:var(--ink)}
+.soon small{display:block;font-size:15px;color:var(--ink-3);margin-top:4px}
+.note{font-size:14px;color:var(--ink-3);margin-top:14px}
+
+.how{padding-block:clamp(48px,7vw,88px);text-align:center}
+.how p{max-width:680px;margin:18px auto 0;color:var(--ink-2);font-size:clamp(17px,1.5vw,19px)}
+.credits{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 40px;margin:30px 0 0;padding:0;list-style:none}
+.credits li{text-align:center}
+.credits small{display:block;font-size:13px;color:var(--ink-3)}
+.credits b{font-family:var(--font-brand);font-weight:600;font-size:22px;letter-spacing:-.02em}
+
+footer{background:#1d2327;color:rgba(255,255,255,.62);padding-block:clamp(44px,6vw,72px)}
+footer .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px}
+footer h2{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,4vw,48px);line-height:1.08;letter-spacing:-.025em;color:#fff;margin:6px 0 0}
+footer h2 span{color:rgba(255,255,255,.5)}
+footer .btn-light{background:#fff;color:var(--black)}
+footer small{display:block;margin-top:22px;font-size:13px}
+
+@media (max-width:820px){.game{grid-template-columns:1fr}.game.flip .media{order:0}.media{border-radius:20px}.logo span{display:none}}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
+</style>
+</head>
+<body>
+<header class="gnav">
+  <div class="wrap">
+    <a class="logo" href="https://grosul.design" aria-label="Alexei Grosul — portfolio">AG <span data-en="Play" data-ru="Игры">Play</span></a>
+    <span class="navr">
+      <span class="lang" role="group" aria-label="Language"><button type="button" id="l-en" aria-pressed="true">EN</button><button type="button" id="l-ru" aria-pressed="false" lang="ru">RU</button></span>
+      <a class="btn btn-line btn-sm" href="https://grosul.design" data-en="Portfolio" data-ru="Портфолио">Portfolio</a>
+    </span>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <h1 class="h-xl"><span data-en="Drawn on paper." data-ru="Нарисовано на бумаге.">Drawn on paper.</span><br><b style="font-weight:500" data-en="Played in the browser." data-ru="Играется в браузере.">Played in the browser.</b></h1>
+    <p class="hsub" data-en="Small games I make with my son. He draws the worlds and makes the rules, I turn them into something you can play." data-ru="Маленькие игры, которые мы делаем с сыном. Он рисует миры и придумывает правила, я превращаю их в то, во что можно играть.">Small games I make with my son. He draws the worlds and makes the rules, I turn them into something you can play.</p>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="g1">
+  <div class="wrap game">
+    <div class="media">
+      <video id="trailer" controls playsinline preload="none" poster="img/pirates-cover.jpg" src="pirates/trailer-en.mp4" aria-label="Pirates of the Pencil Sea trailer"></video>
+    </div>
+    <div>
+      <p class="eyebrow" data-en="3D adventure · keyboard or touch" data-ru="3D-приключение · клавиатура или тач">3D adventure · keyboard or touch</p>
+      <h2 class="h-l" id="g1" data-en="Pirates of the Pencil Sea" data-ru="Пираты Карандашного моря">Pirates of the Pencil Sea</h2>
+      <p class="lead" data-en="A crayon sea, two dozen islands and four wanted pirates. Jump, sail, fire the cannon, eat magic fruits and dig up treasure." data-ru="Море из цветных карандашей, два десятка островов и четыре пирата в розыске. Прыгай, плыви, стреляй из пушки, ешь волшебные фрукты и выкапывай клады.">A crayon sea, two dozen islands and four wanted pirates. Jump, sail, fire the cannon, eat magic fruits and dig up treasure.</p>
+      <ul class="facts">
+        <li data-en="24 islands" data-ru="24 острова">24 islands</li><li data-en="78 monsters" data-ru="78 монстров">78 monsters</li><li data-en="15 magic fruits" data-ru="15 волшебных фруктов">15 magic fruits</li><li data-en="1 parrot" data-ru="1 попугай">1 parrot</li>
+      </ul>
+      <div class="ctas"><a class="btn btn-dark" href="pirates/" data-en="Play now" data-ru="Играть">Play now</a><a class="more" href="#trailer" id="watch" data-en="Watch the trailer" data-ru="Смотреть трейлер">Watch the trailer</a></div>
+      <p class="note" data-en="English and Russian. Progress is saved in your browser." data-ru="На русском и английском. Прогресс сохраняется в браузере.">English and Russian. Progress is saved in your browser.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band white" aria-labelledby="g2">
+  <div class="wrap game flip">
+    <div class="media"><div class="soon"><div><b>Kiki</b><small data-en="Coming soon" data-ru="Скоро">Coming soon</small></div></div></div>
+    <div>
+      <p class="eyebrow" data-en="English words for kids · with voice" data-ru="Английские слова для детей · с озвучкой">English words for kids · with voice</p>
+      <h2 class="h-l" id="g2" data-en="Find it with Kiki" data-ru="Найди с Кики">Find it with Kiki</h2>
+      <p class="lead" data-en="Kiki names a thing in English and you find it in the picture: a room, a street, a park, a kitchen." data-ru="Кики называет предмет по-английски, а ты находишь его на картинке: в комнате, на улице, в парке, на кухне.">Kiki names a thing in English and you find it in the picture: a room, a street, a park, a kitchen.</p>
+      <div class="ctas"><span class="btn btn-line" aria-disabled="true" style="cursor:default;color:var(--ink-3)" data-en="In the works" data-ru="В работе">In the works</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <h2 class="h-l" data-en="How these get made" data-ru="Как это делается">How these get made</h2>
+    <p data-en="It starts at the kitchen table with paper and crayons. The drawings set the look, the rules and the names. Then the game is built to match them, down to the crayon strokes." data-ru="Всё начинается за кухонным столом с бумаги и карандашей. Рисунки задают вид, правила и имена. Потом игра собирается так, чтобы совпасть с ними вплоть до штрихов карандаша.">It starts at the kitchen table with paper and crayons. The drawings set the look, the rules and the names. Then the game is built to match them, down to the crayon strokes.</p>
+    <ul class="credits">
+      <li><small data-en="Idea &amp; creative" data-ru="Идея и креатив">Idea &amp; creative</small><b data-en="Ilya" data-ru="Илья">Ilya</b></li>
+      <li><small data-en="Production" data-ru="Продакшн">Production</small><b data-en="Alexey" data-ru="Алексей">Alexey</b></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p style="margin:0">Alexei Grosul</p>
+      <h2><span data-en="Open to" data-ru="Открыт к">Open to</span> <span style="color:#fff" data-en="collaborate." data-ru="сотрудничеству.">collaborate.</span></h2>
+      <small>© <span id="yr">2026</span> grosul.design</small>
+    </div>
+    <a class="btn btn-light" href="https://grosul.design" data-en="See my design work" data-ru="Смотреть портфолио">See my design work</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var lang='en';try{lang=localStorage.getItem('pencil-lang')||((navigator.language||'en').toLowerCase().indexOf('ru')===0?'ru':'en');}catch(e){}
+  var v=document.getElementById('trailer');
+  function apply(){document.documentElement.lang=lang;
+    document.querySelectorAll('[data-en]').forEach(function(el){el.textContent=el.getAttribute('data-'+lang);});
+    document.getElementById('l-en').setAttribute('aria-pressed',lang==='en');document.getElementById('l-ru').setAttribute('aria-pressed',lang==='ru');
+    var src='pirates/trailer-'+lang+'.mp4';if(v.getAttribute('src')!==src&&v.paused){v.setAttribute('src',src);}}
+  function set(l){lang=l;try{localStorage.setItem('pencil-lang',l);}catch(e){}apply();}
+  document.getElementById('l-en').onclick=function(){set('en');};document.getElementById('l-ru').onclick=function(){set('ru');};
+  document.getElementById('watch').onclick=function(e){e.preventDefault();v.scrollIntoView({behavior:'smooth',block:'center'});var p=v.play();if(p&&p.catch)p.catch(function(){});};
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  apply();
+})();
+</script>
+</body>
+</html>
