@@ -157,7 +157,7 @@ footer small{display:block;margin-top:22px;font-size:13px}
           <div><dt>15</dt><dd data-en="magic fruits" data-ru="фруктов">magic fruits</dd></div>
           <div><dt>4</dt><dd data-en="wanted pirates" data-ru="пирата в розыске">wanted pirates</dd></div>
         </dl>
-        <div class="ctas"><a class="btn btn-dark btn-lg" href="pirates/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l11-6.8a.8.8 0 0 0 0-1.4l-11-6.8A.8.8 0 0 0 8 5.2z"/></svg><span data-en="Play now" data-ru="Играть">Play now</span></a><a class="more" href="#trailer" id="watch" data-en="Watch the trailer" data-ru="Смотреть трейлер">Watch the trailer</a></div>
+        <div class="ctas"><a class="btn btn-dark btn-lg" href="pirates/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l11-6.8a.8.8 0 0 0 0-1.4l-11-6.8A.8.8 0 0 0 8 5.2z"/></svg><span data-en="Play now" data-ru="Играть">Play now</span></a></div>
         <ul class="meta">
           <li data-en="Free, in the browser" data-ru="Бесплатно, в браузере">Free, in the browser</li><li data-en="Keyboard or touch" data-ru="Клавиатура или тач">Keyboard or touch</li><li>EN · RU</li><li data-en="Progress is saved" data-ru="Прогресс сохраняется">Progress is saved</li>
         </ul>
@@ -214,7 +214,6 @@ footer small{display:block;margin-top:22px;font-size:13px}
   document.getElementById('l-en').onclick=function(){set('en');};document.getElementById('l-ru').onclick=function(){set('ru');};
   function playT(){v.controls=true;v.parentNode.classList.add('on');var p=v.play();if(p&&p.catch)p.catch(function(){});}
   document.getElementById('playbtn').onclick=playT;
-  document.getElementById('watch').onclick=function(e){e.preventDefault();v.scrollIntoView({behavior:'smooth',block:'center'});playT();};
   document.getElementById('yr').textContent=new Date().getFullYear();
   apply();
 })();
