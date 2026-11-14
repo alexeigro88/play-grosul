@@ -10,6 +10,13 @@
 </head>
 <body>
 <title>Pirates of the Pencil Sea</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pirates">
+<meta name="theme-color" content="#fbfaf4">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Neucha&display=swap">
 <style>
@@ -63,7 +70,7 @@ button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .btn.plain{background:var(--paper);font-size:17px;padding:5px 14px}
 .btn:disabled{opacity:.45;cursor:default}
 
-.pad{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:16px;display:grid;grid-template-columns:auto auto auto;gap:10px;align-items:end;justify-items:end}
+.pad{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:auto auto auto;gap:10px;align-items:end;justify-items:end}
 #bDash{width:64px;height:64px;font-size:23px;background:var(--paper)}
 #bWpn{grid-column:1;justify-self:end}
 #pows{grid-column:2/4;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
