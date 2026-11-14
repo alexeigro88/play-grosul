@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe9a8"/>
+      <stop offset=".55" stop-color="#bfe3ff"/>
+      <stop offset=".56" stop-color="#6faee3"/>
+      <stop offset="1" stop-color="#2f66c2"/>
+    </linearGradient>
+    <filter id="crayon" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="7"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#sky)"/>
+
+  <!-- sun -->
+  <circle cx="800" cy="210" r="95" fill="#f6cf3a" filter="url(#crayon)"/>
+  <g stroke="#f6cf3a" stroke-width="22" stroke-linecap="round" filter="url(#crayon)">
+    <line x1="800" y1="70" x2="800" y2="20"/><line x1="940" y1="210" x2="990" y2="210"/>
+    <line x1="900" y1="110" x2="935" y2="75"/><line x1="900" y1="310" x2="935" y2="345"/>
+    <line x1="700" y1="110" x2="665" y2="75"/>
+  </g>
+
+  <!-- pencil-scribble waves -->
+  <g fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width="14" stroke-linecap="round">
+    <path d="M40 640 q60 -40 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0"/>
+    <path d="M-20 760 q60 -40 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0"/>
+    <path d="M40 880 q60 -40 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0"/>
+  </g>
+  <g stroke="#1c49a6" stroke-opacity=".25" stroke-width="6" stroke-linecap="round">
+    <line x1="60" y1="980" x2="300" y2="600"/><line x1="200" y1="1010" x2="460" y2="590"/>
+    <line x1="620" y1="1010" x2="880" y2="590"/><line x1="760" y1="1010" x2="1000" y2="620"/>
+  </g>
+
+  <!-- little island -->
+  <g filter="url(#crayon)" stroke="#4a4a52" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M20 575 q90 -70 200 0z" fill="#8cc152"/>
+    <path d="M118 545 q-6 -90 20 -160" fill="none" stroke="#8a5a2b" stroke-width="18"/>
+    <path d="M138 385 q-70 -30 -110 20 q60 -5 110 -20z M138 385 q60 -50 110 -10 q-60 5 -110 10z M138 385 q-20 -70 40 -100 q-10 60 -40 100z" fill="#2f9e4f"/>
+  </g>
+
+  <!-- crossed swords -->
+  <g filter="url(#crayon)" stroke-linecap="round">
+    <g transform="rotate(-38 512 560)">
+      <path d="M494 230 L512 150 L530 230 L530 730 L494 730 Z" fill="#e9eef3" stroke="#4a4a52" stroke-width="12"/>
+      <rect x="430" y="720" width="164" height="40" rx="18" fill="#ff9a1f" stroke="#4a4a52" stroke-width="12"/>
+      <rect x="494" y="760" width="36" height="110" rx="14" fill="#8a5a2b" stroke="#4a4a52" stroke-width="12"/>
+    </g>
+    <g transform="rotate(38 512 560)">
+      <path d="M494 230 L512 150 L530 230 L530 730 L494 730 Z" fill="#e9eef3" stroke="#4a4a52" stroke-width="12"/>
+      <rect x="430" y="720" width="164" height="40" rx="18" fill="#ff9a1f" stroke="#4a4a52" stroke-width="12"/>
+      <rect x="494" y="760" width="36" height="110" rx="14" fill="#8a5a2b" stroke="#4a4a52" stroke-width="12"/>
+    </g>
+  </g>
+
+  <!-- pirate hat -->
+  <g filter="url(#crayon)" stroke="#4a4a52" stroke-width="16" stroke-linejoin="round">
+    <ellipse cx="512" cy="600" rx="330" ry="95" fill="#2f66c2"/>
+    <path d="M330 590 C330 360 400 300 512 300 C624 300 694 360 694 590 Z" fill="#3b78d8"/>
+    <path d="M336 520 C420 548 604 548 688 520 L692 580 C604 610 420 610 332 580 Z" fill="#f6cf3a"/>
+  </g>
+  <!-- star badge -->
+  <path d="M512 368 l22 45 50 7 -36 35 9 50 -45 -24 -45 24 9 -50 -36 -35 50 -7z" fill="#fbfaf4" stroke="#4a4a52" stroke-width="10" stroke-linejoin="round" filter="url(#crayon)"/>
+
+  <!-- red parrot on the brim -->
+  <g filter="url(#crayon)" stroke="#4a4a52" stroke-width="12" stroke-linejoin="round">
+    <path d="M770 560 l80 120 -40 6 -60 -90z" fill="#2f9e4f"/>
+    <ellipse cx="760" cy="505" rx="62" ry="82" fill="#d63b2f"/>
+    <circle cx="760" cy="410" r="52" fill="#d63b2f"/>
+    <path d="M800 405 q42 8 30 52 q-22 -14 -36 -18z" fill="#ff9a1f"/>
+    <path d="M712 490 q-30 40 10 90 q30 -30 20 -80z" fill="#2f9e4f"/>
+  </g>
+  <circle cx="774" cy="398" r="13" fill="#4a4a52"/>
+  <circle cx="778" cy="394" r="4" fill="#fff"/>
+</svg>
