@@ -137,6 +137,21 @@ h2{font-size:38px;color:var(--blue)}
 #fInfo strong{font-family:var(--display);font-size:28px;color:var(--orange);display:block;line-height:1}
 .poster{width:230px;max-width:100%;height:auto;border:2px solid var(--ink);box-shadow:3px 4px 0 rgba(40,40,50,.3);transform:rotate(-2deg)}
 @media (max-height:640px){#mini{width:46px;height:115px}h1{font-size:38px}.fr canvas{width:38px;height:38px}.poster{width:170px}.round{width:70px;height:70px;font-size:26px}}
+/* Phone in landscape: the fruit shop goes side by side (fruits left, info and buttons right) so all 16 fruits fit without scrolling */
+@media (orientation:landscape) and (max-height:540px){
+  #shop .card{max-width:min(920px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,30%);grid-template-rows:auto auto minmax(0,1fr) auto;grid-template-areas:"grid h" "grid chip" "grid info" "grid row";column-gap:14px;row-gap:8px;padding:10px 12px;overflow:hidden;align-items:start;height:100%}
+  #shop .card>h2{grid-area:h;font-size:clamp(24px,7.5vh,34px)}
+  #shop .chip{grid-area:chip;justify-self:center}
+  #shop .grid{grid-area:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:clamp(4px,1.4vh,8px);align-self:stretch;height:100%}
+  #shop #fInfo{grid-area:info;min-height:0;overflow:auto;font-size:15px;align-self:stretch}
+  #shop #fInfo strong{font-size:24px}
+  #shop .row{grid-area:row;flex-direction:column;flex-wrap:nowrap;gap:6px;align-self:end}
+  #shop .row .btn{width:100%}
+  #shop .fr{font-size:clamp(10px,3.1vh,13px);padding:1px 2px 2px;justify-content:center;min-height:0;overflow:hidden}
+  #shop .fr canvas{width:auto;height:min(40px,50%);aspect-ratio:1;flex:none}
+  #shop .fr>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  #shop .fr b .coin{width:10px;height:10px}
+}
 </style>
 
 <div id="app">
