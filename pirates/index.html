@@ -2,11 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="description" content="Pirates of the Pencil Sea: a 3D browser game a dad and his son drew on paper.">
 <meta property="og:title" content="Pirates of the Pencil Sea">
 <meta property="og:image" content="https://play.grosul.design/img/pirates-cover.jpg">
-<style>html,body{height:100%}body{margin:0}[hidden]{display:none!important}</style>
+<style>html,body{height:100%;touch-action:manipulation;overscroll-behavior:none}body{margin:0}[hidden]{display:none!important}</style>
+<script>
+/* Stop iOS Safari from zooming on double-tap or pinch: the game needs every tap. */
+(function(){var last=0,pd=function(e){e.preventDefault()};
+document.addEventListener('gesturestart',pd,{passive:false});
+document.addEventListener('gesturechange',pd,{passive:false});
+document.addEventListener('dblclick',pd,{passive:false});
+document.addEventListener('touchend',function(e){var n=Date.now();if(n-last<350&&!(e.target.closest&&e.target.closest('button,a,input,select,textarea')))e.preventDefault();last=n},{passive:false});
+document.addEventListener('touchmove',function(e){if(e.touches.length>1)e.preventDefault()},{passive:false});})();
+</script>
 </head>
 <body>
 <title>Pirates of the Pencil Sea</title>
