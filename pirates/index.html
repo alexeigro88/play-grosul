@@ -864,7 +864,7 @@ function enemyUpd(dt){if(dt>0){pvx=(P.x-plx)/dt;pvz=(P.z-plz)/dt;}plx=P.x;plz=P.
     if(md>.3){let dr=Math.atan2(mx,mz)-k.rot;dr=Math.atan2(Math.sin(dr),Math.cos(dr));k.rot+=dr*Math.min(1,dt*3);}
     if(!shipBlocked(nx,k.z,k.rot))k.x=nx;if(!shipBlocked(k.x,nz,k.rot))k.z=nz;
     k.g.position.set(k.x,RM?0:Math.sin(tNow*1.5+k.ph)*.05,k.z);k.g.rotation.y=k.rot;
-    const show=k.hp<k.max||(on&&d<26);k.bar.visible=show;if(show){k.bar.position.set(k.x,4.4,k.z);k.bar.quaternion.copy(cam.quaternion);k.fill.scale.x=Math.max(.001,k.hp/k.max);k.fill.position.x=-1.04*(1-k.hp/k.max);}});}
+    const show=k.dead<=0&&(k.hp<k.max||(on&&d<26));k.bar.visible=show;if(show){k.bar.position.set(k.x,4.4,k.z);k.bar.quaternion.copy(cam.quaternion);k.fill.scale.x=Math.max(.001,k.hp/k.max);k.fill.position.x=-1.04*(1-k.hp/k.max);}});}
 function resetEnemies(){ENEMY.forEach(k=>{k.dead=0;k.hp=k.max;k.x=k.hx;k.z=k.hz;k.g.visible=true;k.bar.visible=false;k.g.position.set(k.x,0,k.z);});}
 /* shipyard: three upgrades, two levels each */
 const UPG=[{id:'gun',n:'Пушки',lv:[['Вторая пушка: два ядра за один выстрел.',300000],['Быстрая перезарядка пушек.',400000]]},
@@ -1059,7 +1059,7 @@ function update(dt){tNow+=dt;
       if(Math.hypot(P.x-m.x,P.z-m.z)<m.s+.5&&Math.abs(P.y-I.y)<m.s*1.6+.2)hurtHero(m);}
     if(!inside(I,m.x,m.z,m.s*.5)){const dx=I.x-m.x,dz=I.z-m.z,d=Math.hypot(dx,dz)||1;m.x+=dx/d*.15;m.z+=dz/d*.15;}
     m.g.position.set(m.x,I.y+hop,m.z);if(m.g.userData.wings&&!RM)m.g.userData.wings.forEach((w,wi)=>{w.rotation.z=(wi?-1:1)*Math.sin(tNow*10+m.ph)*.5;});const mm=m.g.userData.m;mm.color.set(m.flash>0?0xffffff:m.froz>0?0x9fdcff:0xffffff);mm.emissive.set(m.flash>0?0xaa2222:0x000000);
-    const show=m.hp<m.max||act;m.bar.visible=show;if(show){m.bar.position.set(m.x,I.y+hop+m.s*2.3+.5,m.z);m.bar.quaternion.copy(cam.quaternion);m.bar.scale.setScalar(m.boss?1.8:1);m.fill.scale.x=Math.max(.001,m.hp/m.max);m.fill.position.x=-.7*(1-m.hp/m.max);}});
+    const show=alive(m)&&(m.hp<m.max||act);m.bar.visible=show;if(show){m.bar.position.set(m.x,I.y+hop+m.s*2.3+.5,m.z);m.bar.quaternion.copy(cam.quaternion);m.bar.scale.setScalar(m.boss?1.8:1);m.fill.scale.x=Math.max(.001,m.hp/m.max);m.fill.position.x=-.7*(1-m.hp/m.max);}});
   seaLife(dt);parrotUpd(dt);enemyUpd(dt);
   if(digNear()&&!S.dig.h){S.dig.h=1;say('Здесь что-то зарыто! Жми «Удар» три раза, чтобы выкопать клад.');}
   /* effects */
