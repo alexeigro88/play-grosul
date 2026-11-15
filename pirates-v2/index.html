@@ -94,7 +94,9 @@ button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .pw canvas{width:40px;height:40px;display:block;margin:auto}
 .pw.cd canvas{opacity:.25}
 .pw b{position:absolute;inset:0;display:grid;place-items:center;font-size:22px;font-weight:400}
-.pw kbd{position:absolute;right:7px;bottom:1px;font:12px var(--body);opacity:.6}
+.pw kbd{position:absolute;right:5px;bottom:4px;font:11px/1 var(--body);opacity:.75;min-width:15px;padding:2px 3px;border:1.5px solid var(--ink);border-radius:4px;background:#fff;text-align:center}
+/* keyboard hints are for computers only: hide them on touch screens */
+@media (hover:none) and (pointer:coarse){.pw kbd,#bDash small,#bJump small,#atkS.key{display:none}}
 #joy{position:absolute;width:110px;height:110px;margin:-55px 0 0 -55px;border:3px dashed var(--ink);border-radius:50%;opacity:.5;pointer-events:none}
 #joy i{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--ink);opacity:.6}
 .float{position:absolute;font-family:var(--display);font-size:34px;color:var(--roof);text-shadow:2px 2px 0 var(--paper),-2px -2px 0 var(--paper),2px -2px 0 var(--paper),-2px 2px 0 var(--paper);pointer-events:none;transform:translate(-50%,-50%);animation:up 1s ease-out forwards;white-space:nowrap}
@@ -192,7 +194,7 @@ h2{font-size:38px;color:var(--blue)}
     <button class="pw" id="bWpn" aria-label="Оружие"><canvas id="wpnC" width="80" height="80"></canvas><kbd>Q</kbd></button>
     <div id="pows"></div>
     <button class="round" id="bDash">Рывок<small>Shift</small></button>
-    <button class="round" id="bAtk"><span id="atkL">Удар</span><small id="atkS">F</small></button>
+    <button class="round" id="bAtk"><span id="atkL">Удар</span><small id="atkS" class="key">F</small></button>
     <button class="round" id="bJump">Прыг<small>пробел</small></button>
   </div>
 
@@ -1168,7 +1170,7 @@ function render(){const moving=Math.hypot(joy.x,joy.y)>.15||keys.KeyW||keys.KeyA
   hBody.rotation.x=P.dash>0?.55:P.slam?-.4:0;
   xMark.visible=!!S.dig;if(S.dig){xMark.position.set(S.dig.x,ISL[S.dig.isl].y+.04,S.dig.z);xMark.scale.setScalar(RM?1:1+Math.sin(tNow*4)*.1);}
   SHIPS.forEach((s,i)=>{s.g.position.set(s.x,RM?0:Math.sin(tNow*1.6+i)*.05,s.z);s.g.rotation.y=s.rot;});if(frameN++%8===0)mapDraw($('mini'),miniBase,MB);
-  const onS=P.ship>=0&&P.ground,cdw=canDraw(),al=tr(cdw?'Рисуй':onS?'Огонь':'Удар');const sm=cdw?'F':onS?money(ballCost()):'F';if($('atkL').textContent!==al)$('atkL').textContent=tr(al);if($('atkS').textContent!==sm)$('atkS').textContent=tr(sm);
+  const onS=P.ship>=0&&P.ground,cdw=canDraw(),al=tr(cdw?'Рисуй':onS?'Огонь':'Удар');const sm=cdw?'F':onS?money(ballCost()):'F';if($('atkL').textContent!==al)$('atkL').textContent=tr(al);if($('atkS').textContent!==sm)$('atkS').textContent=tr(sm);$('atkS').classList.toggle('key',sm==='F');
   ren.render(scene,cam);
   pwBtns.forEach(b=>{const c=cd[b.fid]>0;b.el.classList.toggle('cd',c);b.num.textContent=tr(c?Math.ceil(cd[b.fid]):'');});}
 let last=0;
