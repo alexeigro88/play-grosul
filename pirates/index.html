@@ -750,7 +750,11 @@ SHIPS.forEach(s=>{s.x=s.hx;s.z=s.hz;s.rot=Math.PI;const g=new T.Group(),hm=mat('
 function shipAt(x,z){for(let i=0;i<SHIPS.length;i++){const s=SHIPS[i],dx=x-s.x,dz=z-s.z,sn=Math.sin(s.rot),cs=Math.cos(s.rot);if(Math.abs(dx*sn+dz*cs)<2.6&&Math.abs(dx*cs-dz*sn)<1.2)return i;}return -1;}
 function shipBlocked(x,z,rot){const sn=Math.sin(rot),cs=Math.cos(rot);for(const k of [-2,0,2.4]){const px=x+sn*k,pz=z+cs*k;for(const I of ISL)if(inside(I,px,pz,-.7))return true;
     for(const b of BR){const dx=px-b.ax,dz=pz-b.az,d=dx*b.ux+dz*b.uz;if(d>-.6&&d<b.len+.6&&Math.abs(dx*b.uz-dz*b.ux)<1.9)return true;}}return false;}
-function syncShips(){SHIPS.forEach((s,i)=>{const v=S.ships&&S.ships[i];if(v&&v.length===3&&v.every(n=>typeof n==='number'&&isFinite(n))&&!shipBlocked(v[0],v[1],v[2])){s.x=v[0];s.z=v[1];s.rot=v[2];}else{s.x=s.hx;s.z=s.hz;s.rot=Math.PI;}});}
+function syncShips(){SHIPS.forEach((s,i)=>{const v=S.ships&&S.ships[i];if(v&&v.length===3&&v.every(n=>typeof n==='number'&&isFinite(n))&&!shipBlocked(v[0],v[1],v[2])){s.x=v[0];s.z=v[1];s.rot=v[2];}else{s.x=s.hx;s.z=s.hz;s.rot=Math.PI;}if(shipStranded(s)){s.x=s.hx;s.z=s.hz;s.rot=Math.PI;}});}
+/* a ship left in open sea, too far from any shore to jump onto, sails back to its harbour */
+function shipStranded(s){const sn=Math.sin(s.rot),cs=Math.cos(s.rot);for(const k of [-2,0,2.4]){const px=s.x+sn*k,pz=s.z+cs*k;for(const I of ISL)if(!I.cave&&inside(I,px,pz,-4.5))return false;}return true;}
+let shipChk=1;
+function shipRescue(dt){if((shipChk-=dt)>0)return;shipChk=1;SHIPS.forEach((s,i)=>{if(P.ship===i||!shipStranded(s)||Math.hypot(P.x-s.x,P.z-s.z)<14||shipBlocked(s.hx,s.hz,Math.PI))return;s.x=s.hx;s.z=s.hz;s.rot=Math.PI;save();});}
 let shipHints=0,frameN=0,lockT=-9;
 
 /* map */
@@ -1049,6 +1053,7 @@ function update(dt){tNow+=dt;
   if(P.lunge){if(P.dash>0)MONS.forEach(m=>{if(alive(m)&&!P.lunge.hit[m.id]&&Math.hypot(m.x-P.x,m.z-P.z)<m.s+1.3&&Math.abs(P.y-ISL[m.isl].y)<2.4){P.lunge.hit[m.id]=1;hurtMon(m,P.lunge.dmg,P.x,P.z);}});else P.lunge=null;}
   /* chests */
   for(const i in chests){const c=chests[i];if(!S.open.includes(+i)&&P.ground&&Math.hypot(P.x-c.x,P.z-c.z)<1.7){if(+i<103&&c.val>200000&&alive(MONS.find(m=>m.boss===BOSS[3]))){if(tNow-lockT>4){lockT=tNow;say('Сундук заперт! Сначала победи Адмирала.');}continue;}S.open.push(+i);c.lid.rotation.x=-1.2;const n=gain(c.val);sfx.coin();floatTxt(c.x,1.6,c.z,'+'+money(n),'gold');say('В сундуке '+money(n)+' монет!');save();hud();}}
+  shipRescue(dt);
   /* monsters */
   MONS.forEach(m=>{if(!alive(m))return;const I=ISL[m.isl];m.flash-=dt;m.froz-=dt;
     let hop=0;const act=P.isl===m.isl&&gi===m.isl||Math.hypot(P.x-m.x,P.z-m.z)<m.s+3;
