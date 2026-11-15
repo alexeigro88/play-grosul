@@ -584,6 +584,9 @@ const wallM=mat('#d63b2f','#f4b9b2',{gap:10});
 add(scene,box(120,13,2.2),wallM,-60-GATE-.4,5,WZ);add(scene,box(120,13,2.2),wallM,60+GATE+.4,5,WZ);
 add(scene,box(GATE*2+1,5,2.2),wallM,0,9,WZ);
 const door=add(scene,box(GATE*2+.8,6.5,1),mat('#8a5a2b','#d9b98c',{gap:12,ang:1.57}),0,3.25,WZ);
+/* the wall turns see-through when it stands between the camera and the hero */
+[wallM,door.material].forEach(m=>{m.transparent=true;});let wallA=1;
+function wallFade(){const need=P.z<WZ-.5&&cam.position.z>WZ-2.5?.18:1;wallA+=(need-wallA)*.15;[wallM,door.material].forEach(m=>{m.opacity=wallA;m.depthWrite=wallA>.95;});}
 
 const DEC=[]; /* circles the hero cannot walk through */
 function house(g,x,z,s,wall){add(g,box(s,s*.8,s),mat(wall,'#ffffff',{gap:8,ang:1.2}),x,s*.4,z);const rf=add(g,cone(s*.85,s*.7,4),mat('#d63b2f','#f6b3ac',{gap:7}),x,s*.8+s*.35,z);rf.rotation.y=Q;
@@ -1168,7 +1171,7 @@ function render(){const moving=Math.hypot(joy.x,joy.y)>.15||keys.KeyW||keys.KeyA
   const gi=islandAt(P.x,P.z);shadow.visible=gi>=0;if(gi>=0){shadow.position.set(P.x,ISL[gi].y+.03,P.z);const s=clamp(1-(P.y-ISL[gi].y)*.12,.4,1);shadow.scale.setScalar(s);}
   const port=cam.aspect<1,oy=port?15:10.5,oz=port?14:12.5,k=RM?1:.1;
   cam.position.x+=(P.x-cam.position.x)*k;cam.position.y+=(Math.max(P.y,0)+oy-cam.position.y)*k;cam.position.z+=(P.z+oz-cam.position.z)*k;
-  cam.lookAt(cam.position.x,cam.position.y-oy+1,cam.position.z-oz-1.5);
+  cam.lookAt(cam.position.x,cam.position.y-oy+1,cam.position.z-oz-1.5);wallFade();
   if(!RM)seaTex.offset.set(Math.sin(tNow*.25)*.01,tNow*.004);
   caveK+=((P.x>200?1:0)-caveK)*(RM?1:.08);if(Math.abs(caveK-lastK)>.002){lastK=caveK;fogC.copy(dayC).lerp(caveC,caveK);scene.fog.color.copy(fogC);ren.setClearColor(fogC);amb.intensity=.82-.34*caveK;sun.intensity=.45-.3*caveK;}caveAnim();
   hBody.rotation.x=P.dash>0?.55:P.slam?-.4:0;
