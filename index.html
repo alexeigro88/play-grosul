@@ -162,6 +162,15 @@ footer small{display:block;margin-top:22px;font-size:13px}
 @supports (corner-shape:squircle){.sico{border-radius:14px;corner-shape:squircle}}
 @media (max-width:980px){.sico{margin-bottom:10px}}
 @media (prefers-reduced-motion:reduce){.sico,.stats.rv .sico{transition:none;opacity:1;transform:none}.rec::after{animation:none}}
+
+/* stats v2: icon on the left, big number beside it, label underneath */
+.stats{column-gap:clamp(12px,1.2vw,20px)}
+.stats div,.stats div:first-child{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"i n" "l l";column-gap:8px;row-gap:8px;align-items:center;justify-content:start;padding:0;border-left:0}
+.stats .sico{grid-area:i;margin:0;width:32px;height:32px;border-radius:9px}
+.stats .sico svg{width:21px;height:21px}
+.stats dt{grid-area:n}
+.stats dd{grid-area:l;margin:0;white-space:nowrap}
+@supports (corner-shape:squircle){.stats .sico{border-radius:12px}}
 </style>
 </head>
 <body>
