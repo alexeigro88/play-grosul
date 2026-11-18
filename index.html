@@ -97,7 +97,9 @@ img,video{max-width:100%;display:block}
 .kmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .25s}
 .kmedia::after{display:none}
 .soon-dot{width:8px;height:8px;border-radius:50%;background:#ff9f0a!important;display:inline-block}
-.kthumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:14px clamp(14px,2vw,22px) 0}
+.kmedia video{z-index:1;object-fit:cover;transition:opacity .3s,transform .9s var(--ease)}
+.kmedia.pic video,.kmedia.pic .playbtn,.kmedia.pic .tag.br{opacity:0;pointer-events:none}
+.kthumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:14px clamp(14px,2vw,22px) 0}
 .kthumbs button{position:relative;border:0;padding:0;border-radius:14px;overflow:hidden;cursor:pointer;aspect-ratio:16/9;background:var(--band);box-shadow:0 0 0 1px var(--hair);transition:transform .25s var(--ease),box-shadow .25s}
 .kthumbs img{width:100%;height:100%;object-fit:cover}
 .kthumbs span{position:absolute;left:8px;bottom:8px;font-size:12px;font-weight:500;padding:3px 9px;border-radius:980px;background:rgba(255,255,255,.92);color:var(--ink)}
@@ -190,15 +192,19 @@ footer small{display:block;margin-top:22px;font-size:13px}
   <div class="wrap">
     <article class="feature">
       <div class="fmedia kmedia">
-        <img id="kmain" src="img/kiki-cover.jpg?v=2" alt="Find It! — Kiki the parrot" width="1600" height="900">
+        <img id="kmain" src="img/kiki-cover.jpg?v=3" alt="Find It! — Kiki the parrot" width="1600" height="900">
+        <video id="ktrailer" playsinline preload="none" poster="img/findit-trailer.jpg" src="findit/trailer.mp4" aria-label="Find It! trailer"></video>
+        <button class="playbtn" id="kplay" type="button" aria-label="Play the Find It! trailer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l11-6.8a.8.8 0 0 0 0-1.4l-11-6.8A.8.8 0 0 0 8 5.2z"/></svg></button>
         <span class="tag tl"><i class="soon-dot"></i><span data-en="Coming soon" data-ru="Скоро">Coming soon</span></span>
+        <span class="tag br"><span data-en="Trailer" data-ru="Трейлер">Trailer</span> · 0:25</span>
       </div>
       <div class="kthumbs" role="group" aria-label="Locations">
-        <button type="button" data-k="cover" aria-pressed="true"><img src="img/kiki-cover-s.jpg" alt="" loading="lazy"><span data-en="Kiki" data-ru="Кики">Kiki</span></button>
-        <button type="button" data-k="room"><img src="img/kiki-room-s.jpg" alt="" loading="lazy"><span data-en="Room" data-ru="Комната">Room</span></button>
-        <button type="button" data-k="street"><img src="img/kiki-street-s.jpg" alt="" loading="lazy"><span data-en="Street" data-ru="Улица">Street</span></button>
-        <button type="button" data-k="park"><img src="img/kiki-park-s.jpg" alt="" loading="lazy"><span data-en="Park" data-ru="Парк">Park</span></button>
-        <button type="button" data-k="kitchen"><img src="img/kiki-kitchen-s.jpg" alt="" loading="lazy"><span data-en="Kitchen" data-ru="Кухня">Kitchen</span></button>
+        <button type="button" data-k="trailer" aria-pressed="true"><img src="img/findit-trailer-s.jpg" alt="" loading="lazy"><span data-en="Trailer" data-ru="Трейлер">Trailer</span></button>
+        <button type="button" data-k="cover" aria-pressed="false"><img src="img/kiki-cover-s.jpg?v=3" alt="" loading="lazy"><span data-en="Kiki" data-ru="Кики">Kiki</span></button>
+        <button type="button" data-k="room"><img src="img/kiki-room-s.jpg?v=3" alt="" loading="lazy"><span data-en="Room" data-ru="Комната">Room</span></button>
+        <button type="button" data-k="street"><img src="img/kiki-street-s.jpg?v=3" alt="" loading="lazy"><span data-en="Street" data-ru="Улица">Street</span></button>
+        <button type="button" data-k="park"><img src="img/kiki-park-s.jpg?v=3" alt="" loading="lazy"><span data-en="Park" data-ru="Парк">Park</span></button>
+        <button type="button" data-k="kitchen"><img src="img/kiki-kitchen-s.jpg?v=3" alt="" loading="lazy"><span data-en="Kitchen" data-ru="Кухня">Kitchen</span></button>
       </div>
       <div class="fbody">
         <div>
@@ -258,7 +264,11 @@ footer small{display:block;margin-top:22px;font-size:13px}
   function playT(){v.controls=true;v.parentNode.classList.add('on');var p=v.play();if(p&&p.catch)p.catch(function(){});}
   document.getElementById('playbtn').onclick=playT;
   var km=document.getElementById('kmain'),kb=document.querySelectorAll('.kthumbs button');
-  kb.forEach(function(b){b.onclick=function(){kb.forEach(function(x){x.setAttribute('aria-pressed',x===b);});km.style.opacity=.2;var n=new Image();n.onload=function(){km.src=n.src;km.style.opacity=1;};n.src='img/kiki-'+b.getAttribute('data-k')+'.jpg';};});
+  var kv=document.getElementById('ktrailer'),kmd=kv.parentNode;
+  document.getElementById('kplay').onclick=function(){kmd.classList.remove('pic');kv.controls=true;kmd.classList.add('on');var p=kv.play();if(p&&p.catch)p.catch(function(){});};
+  kb.forEach(function(b){b.onclick=function(){kb.forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+    if(b.getAttribute('data-k')==='trailer'){kmd.classList.remove('pic');return;}
+    kv.pause();kv.controls=false;kmd.classList.remove('on');kmd.classList.add('pic');km.style.opacity=.2;var n=new Image();n.onload=function(){km.src=n.src;km.style.opacity=1;};n.src='img/kiki-'+b.getAttribute('data-k')+'.jpg?v=3';};});
   document.getElementById('yr').textContent=new Date().getFullYear();
   apply();
 })();
