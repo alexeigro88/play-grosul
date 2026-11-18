@@ -69,7 +69,7 @@ img,video{max-width:100%;display:block}
 .facts li{font-size:14px;color:var(--ink-2);background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);border-radius:980px;padding:5px 12px}
 .band.white .facts li{background:var(--band);box-shadow:none}
 .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:26px}
-.feature{display:block;background:var(--bg);border-radius:36px;overflow:hidden;box-shadow:0 40px 90px -28px rgba(16,24,40,.26),0 12px 30px -14px rgba(16,24,40,.14)}
+.feature{display:block;background:var(--bg);border-radius:36px;overflow:hidden;box-shadow:0 32px 80px -30px rgba(16,24,40,.14),0 8px 24px -14px rgba(16,24,40,.07)}
 .fmedia{position:relative;background:#cfe3f5;aspect-ratio:16/9;overflow:hidden}
 .fmedia video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;transition:transform .9s var(--ease)}
 .feature:hover .fmedia:not(.on) video{transform:scale(1.035)}
@@ -163,8 +163,11 @@ footer small{display:block;margin-top:22px;font-size:13px}
 @media (max-width:980px){.sico{margin-bottom:10px}}
 @media (prefers-reduced-motion:reduce){.sico,.stats.rv .sico{transition:none;opacity:1;transform:none}.rec::after{animation:none}}
 
+/* метрики без разделителей и с воздухом, теги — обычным потоком слева */
+.stats{border-block:0!important;padding:4px 0!important;column-gap:clamp(36px,4.4vw,64px)!important;row-gap:24px}.stats div{border-left:0!important;padding:0!important}.meta{display:flex!important;flex-wrap:wrap;justify-content:flex-start;gap:8px!important}@media (max-width:980px){.stats{column-gap:24px!important}}
 /* stats v2: icon on the left, big number beside it, label underneath */
-.stats{column-gap:clamp(12px,1.2vw,20px)}
+/* desktop: four "icon + number" stats must fit one row, so the gap is the minimum and any spare width is spread evenly */
+@media (min-width:981px){.stats{column-gap:clamp(12px,1.2vw,20px)!important;justify-content:space-between}}
 .stats div,.stats div:first-child{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"i n" "l l";column-gap:8px;row-gap:8px;align-items:center;justify-content:start;padding:0;border-left:0}
 .stats .sico{grid-area:i;margin:0;width:32px;height:32px;border-radius:9px}
 .stats .sico svg{width:21px;height:21px}
