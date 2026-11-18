@@ -97,6 +97,8 @@ img,video{max-width:100%;display:block}
 .kmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .25s}
 .kmedia::after{display:none}
 .soon-dot{width:8px;height:8px;border-radius:50%;background:#ff9f0a!important;display:inline-block}
+.pmedia .pshot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;opacity:0;pointer-events:none;transition:opacity .25s}
+.pmedia.pic .pshot{opacity:1}.pmedia.pic .playbtn,.pmedia.pic .tag.br,.pmedia.pic::after{opacity:0;pointer-events:none}
 .kmedia video{z-index:1;object-fit:cover;transition:opacity .3s,transform .9s var(--ease)}
 .kmedia.pic video,.kmedia.pic .playbtn,.kmedia.pic .tag.br{opacity:0;pointer-events:none}
 .kthumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:14px clamp(14px,2vw,22px) 0}
@@ -159,11 +161,20 @@ footer small{display:block;margin-top:22px;font-size:13px}
 <section class="band white" aria-labelledby="g1">
   <div class="wrap">
     <article class="feature">
-      <div class="fmedia">
+      <div class="fmedia pmedia">
         <video id="trailer" playsinline preload="none" poster="img/pirates-sail.jpg" src="pirates/trailer-en.mp4" aria-label="Pirates of the Pencil Sea trailer"></video>
+        <img class="pshot" id="pmain" src="img/pirates-village.jpg" alt="Pirates of the Pencil Sea — gameplay" width="1600" height="900" loading="lazy">
         <button class="playbtn" id="playbtn" type="button" aria-label="Play the trailer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l11-6.8a.8.8 0 0 0 0-1.4l-11-6.8A.8.8 0 0 0 8 5.2z"/></svg></button>
         <span class="tag tl"><i></i><span data-en="New" data-ru="Новинка">New</span></span>
         <span class="tag br" id="dur"><span data-en="Trailer" data-ru="Трейлер">Trailer</span> · 0:35</span>
+      </div>
+      <div class="kthumbs pthumbs" role="group" aria-label="Gameplay">
+        <button type="button" data-p="trailer" aria-pressed="true"><img src="img/pirates-trailer-s.jpg" alt="" loading="lazy"><span data-en="Trailer" data-ru="Трейлер">Trailer</span></button>
+        <button type="button" data-p="village" aria-pressed="false"><img src="img/pirates-village-s.jpg" alt="" loading="lazy"><span data-en="Village" data-ru="Деревня">Village</span></button>
+        <button type="button" data-p="battle" aria-pressed="false"><img src="img/pirates-battle-s.jpg" alt="" loading="lazy"><span data-en="Battle" data-ru="Битва">Battle</span></button>
+        <button type="button" data-p="sea" aria-pressed="false"><img src="img/pirates-sea-s.jpg" alt="" loading="lazy"><span data-en="Sea" data-ru="Море">Sea</span></button>
+        <button type="button" data-p="cave" aria-pressed="false"><img src="img/pirates-cave-s.jpg" alt="" loading="lazy"><span data-en="Cave" data-ru="Пещера">Cave</span></button>
+        <button type="button" data-p="boss" aria-pressed="false"><img src="img/pirates-boss-s.jpg" alt="" loading="lazy"><span data-en="Boss" data-ru="Босс">Boss</span></button>
       </div>
       <div class="fbody">
         <div>
@@ -262,8 +273,12 @@ footer small{display:block;margin-top:22px;font-size:13px}
   function set(l){lang=l;try{localStorage.setItem('pencil-lang',l);}catch(e){}apply();}
   document.getElementById('l-en').onclick=function(){set('en');};document.getElementById('l-ru').onclick=function(){set('ru');};
   function playT(){v.controls=true;v.parentNode.classList.add('on');var p=v.play();if(p&&p.catch)p.catch(function(){});}
-  document.getElementById('playbtn').onclick=playT;
-  var km=document.getElementById('kmain'),kb=document.querySelectorAll('.kthumbs button');
+  var pmd=v.parentNode,pm=document.getElementById('pmain'),pb=document.querySelectorAll('.pthumbs button');
+  document.getElementById('playbtn').onclick=function(){pmd.classList.remove('pic');pb.forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-p')==='trailer');});playT();};
+  pb.forEach(function(b){b.onclick=function(){pb.forEach(function(x){x.setAttribute('aria-pressed',x===b);});var k=b.getAttribute('data-p');
+    if(k==='trailer'){pmd.classList.remove('pic');return;}
+    v.pause();v.controls=false;pmd.classList.remove('on');pm.style.opacity=.2;pmd.classList.add('pic');var n=new Image();n.onload=function(){pm.src=n.src;pm.style.opacity='';};n.src='img/pirates-'+k+'.jpg';};});
+  var km=document.getElementById('kmain'),kb=document.querySelectorAll('.kthumbs:not(.pthumbs) button');
   var kv=document.getElementById('ktrailer'),kmd=kv.parentNode;
   document.getElementById('kplay').onclick=function(){kmd.classList.remove('pic');kv.controls=true;kmd.classList.add('on');var p=kv.play();if(p&&p.catch)p.catch(function(){});};
   kb.forEach(function(b){b.onclick=function(){kb.forEach(function(x){x.setAttribute('aria-pressed',x===b);});
