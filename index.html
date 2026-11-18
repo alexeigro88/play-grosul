@@ -174,6 +174,9 @@ footer small{display:block;margin-top:22px;font-size:13px}
 .stats dt{grid-area:n}
 .stats dd{grid-area:l;margin:0;white-space:nowrap}
 @supports (corner-shape:squircle){.stats .sico{border-radius:12px}}
+
+/* иконки метрик без подложки: иконка слева от цифры, подпись под ними — на всех ширинах */
+.stats div,.stats div:first-child{display:grid!important;grid-template-columns:auto 1fr;grid-template-areas:"i n" "l l";column-gap:10px;row-gap:6px;align-items:center;justify-content:start;padding:0!important;border-left:0!important}.stats .sico{grid-area:i;background:none!important;width:auto!important;height:auto!important;margin:0!important;border-radius:0!important;place-items:center}.stats .sico svg{width:28px!important;height:28px!important;stroke-width:1.7}.stats dt{grid-area:n;line-height:1}.stats dd{grid-area:l;margin:0!important;white-space:nowrap}@media (max-width:980px){.stats{grid-template-columns:repeat(2,max-content)!important;column-gap:48px!important;row-gap:22px!important}}
 </style>
 </head>
 <body>
